@@ -1,2 +1,3 @@
 # Zup
-My journaling and planning software
+
+A file compression software that I use to make my journals, planners, and calenders!
