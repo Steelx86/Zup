@@ -6,14 +6,28 @@ import (
 )
 
 func main() {
-	fileLocation := os.Args[1]
+	command := os.Args[1]
 
-	file, err := os.Open(fileLocation)
+	if command == "open" {
+		fileDir := os.Args[2]
+		key := os.Args[3]
 
-	if err != nil {
-		fmt.Print(err)
-		return
+		file, err := os.Open(fileDir)
+
+		if err != nil {
+			fmt.Errorf("File failed to open: %v", err)
+			return
+		}
+
+		defer file.Close()
+	} else if command == "new" {
+		fileName := os.Args[2]
+
+		os.Create(fileName)
+	} else if command == "help" {
+		fmt.Print(helpMsg)
+	} else {
+		fmt.Print(helpMsg)
 	}
-	
-	defer file.Close()
+
 }

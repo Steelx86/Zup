@@ -1,3 +1,10 @@
 # Zup
 
-A file compression software that I use to make my journals, planners, and calenders!
+Everything you need for life organization, all in one immutable file!
+
+## Current Functionalities
+
+- Journal
+- Planner
+
+## Possible gui?
