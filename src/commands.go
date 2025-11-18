@@ -1,3 +1,8 @@
 package main
 
-func
+func openZup() {
+
+}
+
+func newZup() {
+}
