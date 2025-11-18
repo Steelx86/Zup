@@ -1,10 +1,12 @@
 # Zup
 
-Everything you need for life organization, all in one immutable file!
+A specialized file format that 
 
 ## Current Functionalities
 
 - Journal
 - Planner
 
-## Possible gui?
+## To be implemented?
+
+- GUI
