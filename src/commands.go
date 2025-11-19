@@ -7,25 +7,11 @@ import (
 	"strings"
 )
 
-func commandHandler(command string) {
-	switch command {
-	case "open":
-		openZup(os.Args[2])
-	case "new":
-		newZup(os.Args[2])
-	case "help":
-		fmt.Println(helpMsg)
-	case "generate":
-		generateZupKey()
-	case "sync": // sync with host
-		return // place holder
-	case "host": // open port for hosting
-		return
-	default:
-		fmt.Printf("Unknown command: %s\n", command)
-		fmt.Println(helpMsg)
-	}
-}
+const (
+	KEY_SIZE = 32
+	helpMsg = `Usage: zup [FILE] [KEY] 
+Try 'zup help' for more information\n`
+)
 
 func REPL() {
 	fmt.Print("Welcome to Zup alpha!\n Type '.help' for more information\n")
