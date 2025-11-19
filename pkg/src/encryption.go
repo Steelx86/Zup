@@ -1,7 +1,6 @@
-package main
+package src
 
 import (
-	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"

@@ -3,13 +3,16 @@ package test
 import (
 	"testing"
 
-	"github.com/dlambda/zup/src"
+	"github.com/dlambda/zup/pkg/src"
 )
 
 /* Encryption Tests */
 
 func TestEncryption(t *testing.T) {
-	main.generateKey()
+	key, err := src.GenerateKey(32)
+	if err != nil {
+		t.Fatalf("Key generation failed: %v", err)
+	}
 }
 
 /* Network Tests */
