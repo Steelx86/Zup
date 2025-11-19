@@ -1,6 +1,6 @@
 # zup
 
-CLI tool I use to write my journal and planner
+A journaling, planning, and writing application and backend that produces an immutable, encrypted, and distributable file.
 
 ## Install
 
