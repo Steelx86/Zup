@@ -6,7 +6,11 @@ import (
 	"strings"
 	"encoding/hex"
 
-	"github.com/dlambda/zup/internal/encryption"
+	"zup/internal/models"
+)
+
+const (
+	KEY_SIZE = 32
 )
 
 func newZup(name string) {
