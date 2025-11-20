@@ -39,7 +39,7 @@ func ParseZup(zupString string) (Zup, error) {
 		return Zup{}, fmt.Errorf("failed to parse journal: %v", err)
 	}
 
-	return Zup{
+	return Zup {
 		Name:       name,
 		Generation: ,
 		WebAddress: nil,
