@@ -1,4 +1,4 @@
-package network
+package sync
 
 import (
 	"crypto/tls"

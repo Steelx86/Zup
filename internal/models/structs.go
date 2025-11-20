@@ -1,4 +1,4 @@
-package structs
+package models
 
 import ()
 
@@ -7,7 +7,6 @@ import ()
 type Zup struct {
 	name    string
 	journal Journal
-	planner Planner
 }
 
 /* Journal Portion */
@@ -25,22 +24,3 @@ type JournalEntry struct {
 	content  string
 }
 
-/* Planner Portion */
-
-type Planner struct {
-}
-
-type TaskList struct {
-	id        int
-	name      string
-	tasks     []Task
-	time      string
-	count     uint16
-	countDone uint16
-}
-
-type Task struct {
-	id   int
-	name string
-	done bool
-}
