@@ -8,8 +8,7 @@ import (
 )
 
 const (
-	helpMsg  = 
-`Zup 0.1 Alpha edition 2025
+	helpMsg = `Zup 0.1 Alpha edition 2025
 zup [-OPTION] <param?>
 Options:
   -n <name>     Initilize a .zup file
@@ -23,20 +22,15 @@ Options:
 )
 
 func main() {
-	if len(os.Args) < 2 {
-		fmt.Print(helpMsg)
-		return
-	}
+	commands := os.Args
 
-	command := os.Args[1]
-
-	switch command {
+	switch commands[1] {
 	case "-n":
-		handleNewZup(os.Args[2]) // unfinished
+		handleNewZup(commands)
 	case "-r":
-		handleReadFile()
+		handleReadFile(commands)
 	case "-w":
-		handleReadFile()
+		handleReadFile(commands)
 	case "-g":
 		handleGenerateKey()
 	case "-s":
@@ -50,19 +44,33 @@ func main() {
 	}
 }
 
-func handleNewZup(name string) {
+func handleNewZup(name []string) {
+	if len(os.Args) < 3 {
+		fmt.Print("Please provide a name for the zup file.\n")
+		return
+	}
 
+	key, err := zup.InitZup(name[2])
+	if err != nil {
+		fmt.Printf("failed to initialize zup file: %v", err)
+		return
+	}
+
+	fmt.Printf("Initialized zup file. Key: %s\n", key)
 }
 
-func handleReadFile() {
-
+func handleReadFile(name []string) {
+	if len(os.Args) < 3 {
+		fmt.Print("Please provide text to write to the zup file.\n")
+		return
+	}
 }
 
 func handleGenerateKey() {
 	key, err := zup.GenerateZupKey()
 	if err != nil {
 		fmt.Printf("failed to generate key: %v", err)
-		os.Exit(1)
+		return
 	}
 
 	fmt.Printf("Generated key: %s", key)
@@ -75,4 +83,3 @@ func handleHost() {
 func handlePull() {
 
 }
-

@@ -8,10 +8,7 @@ import (
 func testFunctionality(t *testing.T) {
 	files, err := os.ReadDir("entries")
 	if err != nil {
-
+		return nil, err
 	}
 }
 
-func testEncryption(t *testing.T) {
-
-}

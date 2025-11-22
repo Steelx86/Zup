@@ -13,7 +13,7 @@ const (
 	KEY_SIZE = 32
 )
 
-func NewZup(name string) {
+func InitZup(name string) (string, error) {
 	if strings.HasSuffix(name, ".zup") {
 		os.Create(name)
 	} else {
@@ -22,12 +22,12 @@ func NewZup(name string) {
 
 	key, err := encryption.GenerateKey(KEY_SIZE)
 	if err != nil {
-		fmt.Printf("Key generation error: %v\n", err)
+		return "", err
 	}
 
 	readableKey := hex.EncodeToString(key)
 
-	fmt.Printf("The key for your new zup file is: %s\n", readableKey)
+	return readableKey, nil
 }
 /*
 func OpenZup(name string) {
