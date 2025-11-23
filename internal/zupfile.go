@@ -3,16 +3,19 @@ package internal
 import (
 	"encoding/json"
 	"fmt"
-	"json"
+	"time"
 	"net/url"
 	"strings"
 )
 
 type Zup struct {
-	Name        string            `json:name`
-	Generation  int               `json:generation`
-	WebAddress *url.URL           `json:web_address`
-	Content     []json.RawMessage `json:content`
+	Name       string            `json:"name"`
+	CreatedOn  string            `json:"created_on"`
+	UpdatedOn  string            `json:"updated_on"`
+	Generation int               `json:"generation"`
+	WebAddress *url.URL          `json:"web_address"`
+	Formats    [][]string        `json:"formats"`
+	Content    []json.RawMessage `json:"content"`
 }
 
 func CreateZup(name string, rawAddress string) (Zup, error) {
@@ -21,10 +24,15 @@ func CreateZup(name string, rawAddress string) (Zup, error) {
 		return Zup{}, err
 	}
 
+	currentTime := time.Now().Format(time.RFC3339)
+
 	return Zup{
 		Name:       name,
+		CreatedOn:  currentTime,
+		UpdatedOn:  currentTime,
 		Generation: 0,
 		WebAddress: webAddress,
+		Formats:    [][]string{},
 		Content:    []json.RawMessage{},
 	}, nil
 }
@@ -39,11 +47,6 @@ func ParseZup(zupString string) (Zup, error) {
 }
 
 func (z *Zup) String() string {
-	webAddress := "N/A"
-	if z.WebAddress != nil {
-		webAddress := z.WebAddress.String()
-	}
-
 	var contentStrings []string
 	for i, raw := range z.Content {
 		var contentItem map[string]interface{}
@@ -61,6 +64,6 @@ func (z *Zup) String() string {
 
 	return fmt.Sprintf(
 		"Name: %s\nGeneration: %d\nWeb Address: %s\nContent: %s\n",
-		z.Name, z.Generation, webAddress, content,
+		z.Name, z.Generation, z.WebAddress.String(), content,
 	)
 }

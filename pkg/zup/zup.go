@@ -19,7 +19,7 @@ func InitZup(name string) (string, error) {
 		os.Create(name + ".zup")
 	}
 
-	key, err := encryption.GenerateKey(KEY_SIZE)
+	key, err := internal.GenerateKey(KEY_SIZE)
 	if err != nil {
 		return "", err
 	}
@@ -29,19 +29,19 @@ func InitZup(name string) (string, error) {
 	return readableKey, nil
 }
 
-func OpenZup(name string, key string) (models.Zup, error) {
+func OpenZup(name string, key string) (internal.Zup, error) {
 	file, err := os.ReadFile(name)
-	if err != nil {
-		return models.Zup{}, err
-	}
-
-	encryptedContent := string(file)
-	content, err := encryption.Decrypt(encryptedContent, []byte(key))
 	if err != nil {
 		return internal.Zup{}, err
 	}
 
-	zupData, err := models.ParseZup(content)
+	encryptedContent := string(file)
+	content, err := internal.Decrypt(encryptedContent, []byte(key))
+	if err != nil {
+		return internal.Zup{}, err
+	}
+
+	zupData, err := internal.ParseZup(content)
 	if err != nil {
 		return internal.Zup{}, err
 	}
@@ -50,7 +50,7 @@ func OpenZup(name string, key string) (models.Zup, error) {
 }
 
 func GenerateZupKey() (string, error) {
-	key, err := encryption.GenerateKey(KEY_SIZE)
+	key, err := internal.GenerateKey(KEY_SIZE)
 	if err != nil {
 		return "", err
 	}
