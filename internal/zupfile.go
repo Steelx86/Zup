@@ -3,47 +3,38 @@ package internal
 import (
 	"encoding/json"
 	"fmt"
-	"time"
 	"net/url"
 	"strings"
+	"time"
 )
 
 type Zup struct {
-	Name       string            `json:"name"`
-	CreatedOn  string            `json:"created_on"`
-	UpdatedOn  string            `json:"updated_on"`
-	Generation int               `json:"generation"`
-	WebAddress *url.URL          `json:"web_address"`
-	Formats    [][]string        `json:"formats"`
-	Content    []json.RawMessage `json:"content"`
+	Name       string              `json:"name"`
+	CreatedOn  string              `json:"created_on"`
+	UpdatedOn  string              `json:"updated_on"`
+	Generation int                 `json:"generation"`
+	WebAddress *url.URL            `json:"web_address"`
+	Formats    map[string][]string `json:"formats"`
+	Content    []json.RawMessage   `json:"content"`
 }
 
-func CreateZup(name string, rawAddress string) (Zup, error) {
+func CreateZup(name string, rawAddress string) (*Zup, error) {
 	webAddress, err := url.Parse(rawAddress)
 	if err != nil {
-		return Zup{}, err
+		return &Zup{}, err
 	}
 
 	currentTime := time.Now().Format(time.RFC3339)
 
-	return Zup{
+	return &Zup{
 		Name:       name,
 		CreatedOn:  currentTime,
 		UpdatedOn:  currentTime,
 		Generation: 0,
 		WebAddress: webAddress,
-		Formats:    [][]string{},
+		Formats:    make(map[string][]string),
 		Content:    []json.RawMessage{},
 	}, nil
-}
-
-func ParseZup(zupString string) (Zup, error) {
-	var zup Zup
-	err := json.Unmarshal([]byte(zupString), &zup)
-	if err != nil {
-		return Zup{}, fmt.Errorf("failed to parse Zup JSON: %v", err)
-	}
-	return zup, nil
 }
 
 func (z *Zup) String() string {
@@ -66,4 +57,12 @@ func (z *Zup) String() string {
 		"Name: %s\nGeneration: %d\nWeb Address: %s\nContent: %s\n",
 		z.Name, z.Generation, z.WebAddress.String(), content,
 	)
+}
+
+func (z *Zup) AddFormat(formatName string, fields []string) {
+	z.Formats[formatName] = fields
+}
+
+func (z *Zup) AddContentItem(item json.RawMessage) {
+	z.Content = append(z.Content, item)
 }

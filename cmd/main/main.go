@@ -23,6 +23,11 @@ Options:
 )
 
 func main() {
+	if len(os.Args) < 2 {
+		fmt.Print(helpMsg)
+		return
+	}
+
 	commands := os.Args
 
 	switch commands[1] {
@@ -30,6 +35,8 @@ func main() {
 		handleNewZup(commands)
 	case "-r":
 		handleReadFile(commands)
+	case "-d":
+		handleNewFormat(commands)
 	case "-w":
 		handleReadFile(commands)
 	case "-g":
@@ -65,6 +72,10 @@ func handleReadFile(name []string) {
 		fmt.Print("Please provide text to write to the zup file.\n")
 		return
 	}
+}
+
+func handleNewFormat(name []string) {
+
 }
 
 func handleGenerateKey() {
